@@ -2,9 +2,11 @@
 # Copyright (c) 2020 Intel Corporation
 
 dist: bionic
-language: go
+language: minimal
 go:
-  - 1.15.5
+  - 1.15.x
+env:
+  - GO111MODULE=on
 
 before_install:
   - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $GOPATH/bin v1.25.1
