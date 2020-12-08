@@ -2,7 +2,7 @@
 # Copyright (c) 2020 Intel Corporation
 
 dist: bionic
-language: minimal
+language: go
 go:
   - 1.15.x
 env:
