@@ -7,8 +7,8 @@ language: minimal
 before_install:
   - wget https://golang.org/dl/go1.15.5.linux-amd64.tar.gz
   - sudo tar -C /usr/local -xzf go1.15.5.linux-amd64.tar.gz
-  - sudo export GOPATH=/usr/local/bin
-  - sudo export PATH=$PATH:$GOPATH/bin
+  - export GOPATH=/usr/local/go
+  - export PATH=$PATH:$GOPATH/bin
   - sudo curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $GOPATH/bin v1.25.1
   - sudo apt-get install -y shellcheck
   - sudo apt-get install -y pylint
