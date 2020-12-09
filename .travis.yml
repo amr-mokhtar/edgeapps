@@ -11,6 +11,8 @@ env:
 
 before_install:
   - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.32.0
+  # Ginkgo
+  - go get -u github.com/onsi/ginkgo/ginkgo
   - sudo apt-get install -y shellcheck
   - sudo apt-get install -y pylint
 
