@@ -1,4 +1,7 @@
-
+```text
+SPDX-License-Identifier: Apache-2.0
+Copyright (c) 2020 Intel Corporation
+```
 # **Qwilt CDN Overview**
 
 Qwilt’s Open Edge Cloud for service providers is an edge computing solution that dramatically reduces the cost of building network capacity, improves delivery quality and opens the door to new business models, customers and revenue from the OTT ecosystem.  Qwilt’s Open Edge Cloud solution delivers CDN functionality over an edge computing infrastructure, pushing the content caching and delivery as far out to the edge of the network as possible. Service providers can establish a massively distributed layer of content caching resources that enable content delivery from the closest possible location to subscribers. Each edge server is low cost and can be utilized by other virtual network function (VNF)-based services, which makes it cost effective enough to distribute throughout the service providers access network. This gives the solution an ability to scale up very rapidly without a long investment payback time.
