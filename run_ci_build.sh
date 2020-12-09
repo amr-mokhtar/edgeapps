@@ -184,12 +184,10 @@ function run_ci_build()
 		fi
 	done
 
-	if [ $ERRORS > 0 ]; then
-		exit 1
-	fi
+	#if [ $ERRORS > 0 ]; then
+	#	exit 1
+	#fi
 }
 
 # Call build function
-set -x
 run_ci_build
-set +x
