@@ -2,18 +2,15 @@
 # Copyright (c) 2020 Intel Corporation
 
 dist: bionic
-language: go
-go:
-  - 1.15.5
-
-env:
-  - GO111MODULE=on
+language: minimal
 
 before_install:
+  - wget https://golang.org/dl/go1.15.5.linux-amd64.tar.gz
+  - sudo tar -C /usr/local -xzf go1.15.5.linux-amd64.tar.gz
+  - export PATH=$PATH:/usr/local/go/bin
   - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.32.0
-  - go mod download
   - sudo apt-get install -y shellcheck
   - sudo apt-get install -y pylint
 
-script:
-  - bash ./run_ci_build.sh
+#script:
+#  - ./run_ci_build.sh
