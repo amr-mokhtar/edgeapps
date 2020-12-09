@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (c) 2020 Intel Corporation
 
+ERROR="${PWD}/error"
+
 # Checks whether the application includes a Makefile and if so, runs it. It also
 # checks for a 'make test' command and if it finds it, runs this as well
 # $1 Path to the application folder
@@ -51,8 +53,8 @@ function check_coding_style()
 			if [ "${GO_STYLE_CHECK}" != "" ]; then
 				echo "${GO_STYLE_CHECK}"
 				echo "Error: gofmt -d $line detected issues"
+				touch "${ERROR}"
 				echo
-				echo 1 > error
 			fi
 		elif [ "${CHECK_FILE_TYPE}" == "sh" ]; then
 			local SHELL_CHECK_RESULT
@@ -60,8 +62,8 @@ function check_coding_style()
 			if [ "${SHELL_CHECK_RESULT}" != "" ]; then
 				echo "${SHELL_CHECK_RESULT}"
 				echo "Error: shellcheck $line detected issues"
+				touch "${ERROR}"
 				echo
-				echo 1 > error
 			fi
 		elif [ "${CHECK_FILE_TYPE}" == "py" ]; then
 			local PYLINT_RC_FILE="${EDGEAPPS_HOME}/pylint.rc"
@@ -73,8 +75,8 @@ function check_coding_style()
 			if [ "${PYLINT_CHECK_RESULT}" != "" ]; then
 				echo "${PYLINT_CHECK_RESULT}"
 				echo "Error: pylint --rcfile=${PYLINT_RC_FILE} $line detected issues"
+				touch "${ERROR}"
 				echo
-				echo 1 > error
 			fi
 		fi
 	done
@@ -83,7 +85,7 @@ function check_coding_style()
 		cd "${FOLDER_PATH}" || exit
 		if ! golangci-lint run; then
 			echo "Error: golangci-lint run detected issues"
-			echo 1 > error
+			touch "${ERROR}"
 		fi
 	fi
 	echo
@@ -131,7 +133,7 @@ function check_licence_header()
 		local FILE_NAME
 		FILE_NAME=$(echo "${FILE_PATH}" | cut -d '.' -f 2-)
 		echo "Error: File ${EDGEAPPS_REPO}${APPLICATION_FOLDER}${FILE_NAME} has incorrect licence header"
-		echo 1 > error
+		touch "${ERROR}"
 	fi
 }
 
@@ -141,8 +143,8 @@ function run_ci_build()
 	local EDGEAPPS_REPO="$PWD"
 	local LAST_DIRECTORY_CHECKED=""
 
-	#git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-	#git fetch
+	git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+	git fetch
 
 	for file in $(git diff origin/master --name-only); do
 		local PATH_TO_FILE
@@ -184,12 +186,14 @@ function run_ci_build()
 			echo
 		fi
 	done
-
-	if [ $(cat error) == "1" ]; then
-		exit 1
-	fi
 }
 
 # Call build function
-echo 0 > error
+set -x
 run_ci_build
+set +x
+
+if test -f "${ERROR}"; then
+	rm -rf "${ERROR}"
+	exit 1
+fi
