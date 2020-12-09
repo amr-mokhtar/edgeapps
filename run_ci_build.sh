@@ -52,7 +52,7 @@ function check_coding_style()
 			GO_STYLE_CHECK=$(gofmt -d "$line")
 			if [ "${GO_STYLE_CHECK}" != "" ]; then
 				echo "${GO_STYLE_CHECK}"
-				echo "Error: gofmt -d $line detected issues"
+				>&2 echo "Error: gofmt -d $line detected issues"
 				echo
 				((ERRORS++))
 			fi
@@ -61,7 +61,7 @@ function check_coding_style()
 			SHELL_CHECK_RESULT=$(shellcheck "$line")
 			if [ "${SHELL_CHECK_RESULT}" != "" ]; then
 				echo "${SHELL_CHECK_RESULT}"
-				echo "Error: shellcheck $line detected issues"
+				>&2 echo "Error: shellcheck $line detected issues"
 				echo
 				((ERRORS++))
 			fi
@@ -74,7 +74,7 @@ function check_coding_style()
 			PYLINT_CHECK_RESULT=$(pylint --rcfile="${PYLINT_RC_FILE}" "$line")
 			if [ "${PYLINT_CHECK_RESULT}" != "" ]; then
 				echo "${PYLINT_CHECK_RESULT}"
-				echo "Error: pylint --rcfile=${PYLINT_RC_FILE} $line detected issues"
+				>&2 echo "Error: pylint --rcfile=${PYLINT_RC_FILE} $line detected issues"
 				echo
 				((ERRORS++))
 			fi
@@ -84,7 +84,7 @@ function check_coding_style()
 	if find "${FOLDER_PATH}" -type f | cut -d '.' -f 2- | grep -qe 'go' ; then
 		cd "${FOLDER_PATH}"
 		if ! golangci-lint run; then
-			echo "Error: golangci-lint run detected issues"
+			>&2 echo "Error: golangci-lint run detected issues"
 			((ERRORS++))
 		fi
 	fi
@@ -132,7 +132,7 @@ function check_licence_header()
 	if [ "${HEADER_CHECK_RESULT}" -lt "3" ] && [ "${CHECK_FILE_RESULT}" == "True" ]; then
 		local FILE_NAME
 		FILE_NAME=$(echo "${FILE_PATH}" | cut -d '.' -f 2-)
-		echo "Error: File ${EDGEAPPS_REPO}${APPLICATION_FOLDER}${FILE_NAME} has incorrect licence header"
+		>&2 echo "Error: File ${EDGEAPPS_REPO}${APPLICATION_FOLDER}${FILE_NAME} has incorrect licence header"
 		((ERRORS++))
 	fi
 }
