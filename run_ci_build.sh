@@ -63,7 +63,7 @@ function check_coding_style()
 				echo "${SHELL_CHECK_RESULT}"
 				echo "Error: shellcheck $line detected issues"
 				echo
-				((ERRORS++))
+				let "ERRORS++"
 			fi
 		elif [ "${CHECK_FILE_TYPE}" == "py" ]; then
 			local PYLINT_RC_FILE="${EDGEAPPS_HOME}/pylint.rc"
@@ -76,7 +76,7 @@ function check_coding_style()
 				echo "${PYLINT_CHECK_RESULT}"
 				echo "Error: pylint --rcfile=${PYLINT_RC_FILE} $line detected issues"
 				echo
-				((ERRORS++))
+				let "ERRORS++"
 			fi
 		fi
 	done
@@ -85,7 +85,7 @@ function check_coding_style()
 		cd "${FOLDER_PATH}" || exit
 		if ! golangci-lint run; then
 			echo "Error: golangci-lint run detected issues"
-			((ERRORS++))
+			let "ERRORS++"
 		fi
 	fi
 	echo
@@ -133,7 +133,7 @@ function check_licence_header()
 		local FILE_NAME
 		FILE_NAME=$(echo "${FILE_PATH}" | cut -d '.' -f 2-)
 		echo "Error: File ${EDGEAPPS_REPO}${APPLICATION_FOLDER}${FILE_NAME} has incorrect licence header"
-		((ERRORS++))
+		let "ERRORS++"
 	fi
 }
 
@@ -184,9 +184,9 @@ function run_ci_build()
 		fi
 	done
 
-	#if [ $ERRORS > 0 ]; then
-	#	exit 1
-	#fi
+	if [ $ERRORS > 0 ]; then
+		exit 1
+	fi
 }
 
 # Call build function
