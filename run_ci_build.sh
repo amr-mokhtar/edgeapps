@@ -143,6 +143,9 @@ function run_ci_build()
 	local EDGEAPPS_REPO="$PWD"
 	local LAST_DIRECTORY_CHECKED=""
 
+	git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+	git fetch
+
 	for file in $(git diff origin/master --name-only); do
 		local PATH_TO_FILE
 		PATH_TO_FILE=$(echo "$file" | cut -d '/' -f -2)
