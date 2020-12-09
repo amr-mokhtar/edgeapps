@@ -189,7 +189,9 @@ function run_ci_build()
 }
 
 # Call build function
+set -x
 run_ci_build
+set +x
 
 if test -f "${ERROR}"; then
 	rm -rf "${ERROR}"
