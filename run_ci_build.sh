@@ -190,4 +190,6 @@ function run_ci_build()
 }
 
 # Call build function
+set -x
 run_ci_build
+set +x
