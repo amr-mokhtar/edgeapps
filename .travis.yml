@@ -4,6 +4,12 @@
 dist: bionic
 language: minimal
 
+env:
+  global:
+    - GO111MODULE=on
+    - GOFLAGS='-mod vendor'
+    - PATH=${TRAVIS_BUILD_DIR}/bin:${PATH}
+
 before_install:
   - wget https://golang.org/dl/go1.15.5.linux-amd64.tar.gz
   - sudo tar -C /usr/local -xzf go1.15.5.linux-amd64.tar.gz
