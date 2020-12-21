@@ -13,4 +13,4 @@ before_install:
   - sudo apt-get install -y pylint
 
 script:
-  - ./run_ci_build.sh
+  - bash run_ci_build.sh
