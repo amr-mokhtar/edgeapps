@@ -4,6 +4,9 @@
 dist: bionic
 language: minimal
 
+git:
+  submodules: false
+
 env:
   global:
     - GO111MODULE=on
