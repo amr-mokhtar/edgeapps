@@ -82,7 +82,7 @@ function check_coding_style()
 		fi
 	done
 
-	if find "${FOLDER_PATH}" -type f | cut -d '.' -f 2- | grep -qe 'go' ; then
+	if find "${FOLDER_PATH}" -type f | cut -d '.' -f 2- | grep -qe '*.go' ; then
 		cd "${FOLDER_PATH}" || exit
 		if ! golangci-lint run; then
 			echo "Error: golangci-lint run detected issues"
@@ -147,7 +147,7 @@ function run_ci_build()
 	git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
 	git fetch
 
-	for file in $(git diff openness-20.09 --name-only); do
+	for file in $(git diff openness_190901 --name-only); do
 		local PATH_TO_FILE
 		PATH_TO_FILE=$(echo "$file" | cut -d '/' -f -2)
 		if ! test -d "${PATH_TO_FILE}"; then
