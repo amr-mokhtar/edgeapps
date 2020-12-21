@@ -147,7 +147,7 @@ function run_ci_build()
 	git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
 	git fetch
 
-	for file in $(git diff origin/master --name-only); do
+	for file in $(git diff openness-20.09 --name-only); do
 		local PATH_TO_FILE
 		PATH_TO_FILE=$(echo "$file" | cut -d '/' -f -2)
 		if ! test -d "${PATH_TO_FILE}"; then
