@@ -2,7 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (c) 2020 Intel Corporation
 
-ERROR="${PWD}/error"
+ERROR="${PWD}/.error"
+EDGEAPPS_HOME="${PWD}"
 
 # Checks whether the application includes a Makefile and if so, runs it. It also
 # checks for a 'make test' command and if it finds it, runs this as well
@@ -191,7 +192,6 @@ function run_ci_build()
 # Call build function
 set -x
 run_ci_build
-set +x
 
 if test -f "${ERROR}"; then
 	rm -rf "${ERROR}"
