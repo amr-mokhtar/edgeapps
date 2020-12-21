@@ -84,7 +84,7 @@ function check_coding_style()
 
 	if find "${FOLDER_PATH}" -type f | cut -d '.' -f 2- | grep -qe 'go' ; then
 		cd "${FOLDER_PATH}" || exit
-		if ! golangci-lint run; then
+		if ! ./bin/golangci-lint run; then
 			echo "Error: golangci-lint run detected issues"
 			touch "${ERROR}"
 		fi
